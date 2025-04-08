@@ -27,6 +27,7 @@ did you complete the assignment information? delete this line if yes
 %% ____________________
 %% INITIALIZATION
 %testing github
+%john testing
 
 %% ____________________
 %% CALCULATIONS
