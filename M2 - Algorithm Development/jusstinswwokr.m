@@ -40,18 +40,18 @@ for (col = 2:col_length)
     for (row = 1:row_length)
         if(row == 1)
             if (isnan(data(row,col)) == 1)
-                new_data(row,col) = [new_data,data(row,col)];
+                new_data= [new_data,data(row,col)];
             else
-                new_data = [new_data, mean(data(col,row), data(row+1, col+1))];
+                new_data = [new_data, (data(col,row) + data(row+1, col+1))/2];
             end
             elseif row == row_length
                 if isnan(data(row, col)) == 1
-                    new_data = [new_data, data(row-1, col-1)];
+                    new_data = [new_data, data(row-1, col)];
                 else
-                    new_data = [new_data, mean(data(row-1,col-1), data(row,col))];
+                    new_data = [new_data, (data(row-1,col) + data(row,col))/2];
                 end
             else
-                new_data = [new_data, mean9data(row-1,col-1),data(row_col),data(row+1,col+1)];
+                new_data = [new_data, (data(row-1,col-1)+ data(row_col)+data(row+1,col))/3];
          end
      end
 end
