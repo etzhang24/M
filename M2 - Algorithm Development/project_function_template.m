@@ -30,6 +30,7 @@ did you complete the assignment information? delete this line if yes
 %john testing
 %did johns test work
 %justin test
+%justin test 2
 
 %% ____________________
 %% CALCULATIONS
