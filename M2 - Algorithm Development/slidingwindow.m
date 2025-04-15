@@ -1,64 +1,58 @@
 data = readmatrix("Sp25_cruiseAuto_experimental_data.csv");
-
 compact_winter_test1 = data(:, 2);
 
+% Remove NaN
+compact_winter_test1 = compact_winter_test1(~isnan(compact_winter_test1));
+
 % window size
-w = 3;
+w = 7;              % Total number of points in kernel
+half_w = floor(w/2);  % Number of points in each half
 
-% first pass
-n1 = length(compact_winter_test1);
-first_pass = zeros(n1 - w + 1, 1);
+% stddev for the Gaussian.
+sigma = w/3;
 
-for i = 1:(n1 - w + 1)
-    window = compact_winter_test1(i:i+w-1);
-    first_pass(i) = mean(window);
+% kernel centered on 0
+x = -half_w:half_w;
+gauss_kernel = exp(-(x.^2) / (2 * sigma^2));
+
+% unitize the kernel vals
+gauss_kernel = gauss_kernel / sum(gauss_kernel);
+
+% array creation
+nData = length(compact_winter_test1);
+gauss_smooth = zeros(nData, 1);
+
+% manual convolution
+for idx = 1:nData
+    % find indicies in window
+    start_idx = max(1, idx - half_w);
+    end_idx   = min(nData, idx + half_w);
+    
+    % Find corr. indicies in kernel
+    kernel_start = (start_idx - idx) + half_w + 1;
+    kernel_end = (end_idx   - idx) + half_w + 1;
+    
+    % get data
+    data_segment = compact_winter_test1(start_idx:end_idx);
+    weights = gauss_kernel(kernel_start:kernel_end)';
+    
+    % weighted avg
+    gauss_smooth(idx) = sum(data_segment .* weights) / sum(weights);
 end
 
-% second pass
-n2 = length(first_pass);
-second_pass = zeros(n2 - w + 1, 1);
-
-for i = 1:(n2 - w + 1)
-    window = first_pass(i:i+w-1);
-    second_pass(i) = mean(window);
-end
-
-%third pass
-n3 = length(second_pass);
-third_pass = zeros(n3 - w + 1, 1);
-
-for i = 1:(n3 - w + 1)
-    window = second_pass(i:i+w-1);
-    third_pass(i) = mean(window);
-end
-
-% plot
+% Plot
 figure;
 
-subplot(4, 1, 1);
+subplot(2,1,1);
 plot(compact_winter_test1, 'b.-');
-title('Original Data');
+title('original data');
 xlabel('Index');
 ylabel('Speed');
 grid on;
 
-subplot(4, 1, 2);
-plot((w:n1), first_pass, 'g.-');
-title('1st Pass - 3-Value Moving Average');
-xlabel('Index');
-ylabel('Speed');
-grid on;
-
-subplot(4, 1, 3);
-plot((2*w-1:n1), second_pass, 'r.-');
-title('2nd Pass - Smoothed Again');
-xlabel('Index');
-ylabel('Speed');
-grid on;
-
-subplot(4, 1, 4);
-plot((2*w-1:n2), third_pass, 'k.-');
-title('3rd Pass - Smoothed Again p2');
+subplot(2,1,2);
+plot(gauss_smooth, 'r.-');
+title('smoothed data');
 xlabel('Index');
 ylabel('Speed');
 grid on;
