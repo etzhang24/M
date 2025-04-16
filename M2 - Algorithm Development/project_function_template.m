@@ -26,12 +26,6 @@ did you complete the assignment information? delete this line if yes
 
 %% ____________________
 %% INITIALIZATION
-%testing github
-%john testing
-%did johns test work
-%justin test
-%justin test 2
-% pull test ashjdhiauwhdiawhuofaoufbewofbeawb
 
 %% ____________________
 %% CALCULATIONS

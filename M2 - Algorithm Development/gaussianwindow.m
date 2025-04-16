@@ -1,37 +1,49 @@
-function [outputData] = gaussianwindow(inputData)
+data = readmatrix("Sp25_cruiseAuto_experimental_data.csv");
+compact_winter_test1 = data(:, 2);
+compact_winter_test1 = compact_winter_test1(~isnan(compact_winter_test1));
 
-data = inputData;
-num_passes = 500; 
+num_passes = 500;
 
-%Gaussian kernel
-w = 7;              
-half_w = floor(w/2);  
+w = 7;
+half_w = floor(w / 2);
 sigma = w / 3;
 x = -half_w:half_w;
 gauss_kernel = exp(-(x.^2) / (2 * sigma^2));
-gauss_kernel = gauss_kernel / sum(gauss_kernel); 
+gauss_kernel = gauss_kernel / sum(gauss_kernel);
 
-%passes
-smoothed = data;
+smoothed = compact_winter_test1;
 
 for pass = 1:num_passes
-    nData = length(smoothed);
-    temp_smooth = zeros(nData, 1);
+    n = length(smoothed);
+    updated = zeros(n, 1);
     
-    for idx = 1:nData
-        start_idx = max(1, idx - half_w);
-        end_idx   = min(nData, idx + half_w);
+    for i = 1:n
+        start_i = max(1, i - half_w);
+        end_i = min(n, i + half_w);
         
-        kernel_start = (start_idx - idx) + half_w + 1;
-        kernel_end = (end_idx - idx) + half_w + 1;
+        k_start = (start_i - i) + half_w + 1;
+        k_end = (end_i - i) + half_w + 1;
         
-        data_segment = smoothed(start_idx:end_idx);
-        weights = gauss_kernel(kernel_start:kernel_end)';
+        seg = smoothed(start_i:end_i);
+        wts = gauss_kernel(k_start:k_end)';
         
-        temp_smooth(idx) = sum(data_segment .* weights) / sum(weights);
+        updated(i) = sum(seg .* wts) / sum(wts);
     end
     
-    smoothed = temp_smooth;
+    smoothed = updated;
 end
 
-outputData = smoothed;
+figure;
+subplot(2,1,1);
+plot(compact_winter_test1, 'b.-');
+title('Original Data');
+xlabel('Index');
+ylabel('Speed');
+grid on;
+
+subplot(2,1,2);
+plot(smoothed, 'r.-');
+title(['Smoothed Data (' num2str(num_passes) ' passes)']);
+xlabel('Index');
+ylabel('Speed');
+grid on;

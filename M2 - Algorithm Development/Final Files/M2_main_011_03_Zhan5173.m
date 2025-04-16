@@ -80,7 +80,7 @@ for i = 1:nTests
     fprintf('  Final speed: %.2f m/s\n\n', final_speeds(i));
 end
 
-figure('Name','CruiseAuto Speed Tests','NumberTitle','off');
+figure('Name','CruiseAuto Speed Tests');
 
 %plotting each test
 for g = 1:9
