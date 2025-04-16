@@ -58,7 +58,7 @@ for i = 1:nTests
     end
 
     [acc_t, t_const] = M2_sub3_011_03_soaresj(clean_speed, time);
-    [init_v, final_v] = M2_sub4_011_03_pteal(clean_speed, time);
+    [init_v, final_v] = M2_sub4_011_03_pteal(clean_speed, time, acc_t);
 
     acc_times(i) = acc_t;
     time_consts(i) = t_const;

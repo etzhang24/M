@@ -1,4 +1,4 @@
-function [init_speed, final_speed] = M2_sub4_011_03_pteal(clean_speed, time)
+function [init_speed, final_speed] = M2_sub4_011_03_pteal(clean_speed, time, acc_t)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
@@ -28,55 +28,27 @@ function [init_speed, final_speed] = M2_sub4_011_03_pteal(clean_speed, time)
 %% ____________________
 %% INITIALIZATION
 
-n = length(clean_speed);
-acc_vector = zeros(n, 1);
-for i = 1:n-1
-    acc_vector(i) = (clean_speed(i+1) - clean_speed(i)) / (time(i+1) - time(i));
-end
-acc_vector(n) = acc_vector(n-1);
+start_idx = find(time >= acc_t, 1, 'first');
+init_speed = clean_speed(start_idx);
 
 %% ____________________
 %% CALCULATIONS
 
-
-threshold = 4; % same as in sub3
 window = 10;
-start_i = 1;
+threshold = 0.1;
 
-while start_i <= (n - window)
-    avg_acc = mean(acc_vector(start_i:start_i + window - 1));
-    if avg_acc > threshold
+% Search backwards
+for i = length(clean_speed) - window:-1:start_idx
+    slope = mean(abs(diff(clean_speed(i:i+window))));
+    if slope < threshold
+        final_speed = mean(clean_speed(i:i+window));
         break;
     end
-    start_i = start_i + 1;
 end
-
-end_i = n - window;
-while end_i > start_i
-    % idx in bounds
-    window_end = min(end_i + window - 1, n);
-    
-    avg_acc = mean(abs(acc_vector(end_i:window_end)));
-    
-    if avg_acc > 0.15
-        break;
-    end
-    
-    end_i = end_i - 1;
-end
-
-
-%% ____________________
-%% FORMATTED TEXT/FIGURE DISPLAYS
-
 
 %% ____________________
 %% RESULTS
 
-
-init_speed = mean(clean_speed(1:n));
-final_speed = mean(clean_speed(end-n+1:end));
-end
 
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT

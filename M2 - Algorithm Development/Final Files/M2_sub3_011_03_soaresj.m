@@ -58,7 +58,7 @@ end
 acc_t = time(t_start_i);
 
 %% TIME CONSTANT
-[initial_v, final_v] = M2_sub4_011_03_pteal(smooth_y, time);
+[initial_v, final_v] = M2_sub4_011_03_pteal(smooth_y, time, acc_t);
 
 y_tau = initial_v + 0.632 * (final_v - initial_v);
 
