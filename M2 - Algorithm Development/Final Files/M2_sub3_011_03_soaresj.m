@@ -31,11 +31,11 @@ speed = smooth_y;
 time_count = length(time);
 acc_vector = zeros(time_count,1);
 
-%Creating the values of acceleration and setting them to the original
 %zeros array.
 for count = 1:(time_count - 1)
     acc_vector(count) = ((speed(count + 1) - speed(count)) / (time(count + 1) - time(count)));
 end
+
 
 acc_vector(time_count) = acc_vector(time_count - 1);
 

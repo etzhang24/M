@@ -70,7 +70,7 @@ end
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-% printing the times for each test
+% printing times for all 45 tests
 for i = 1:nTests
     group = group_labels{ceil(i/5)};
     fprintf('Test %d (%s):\n', i, group);
@@ -115,7 +115,7 @@ end
 %% ____________________
 %% RESULTS
 
-
+    
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT
 % We have not used source code obtained from any other unauthorized

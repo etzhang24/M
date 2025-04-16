@@ -28,30 +28,41 @@ function [init_speed, final_speed] = M2_sub4_011_03_pteal(clean_speed, time)
 %% ____________________
 %% INITIALIZATION
 
-% input validation
-if length(time) < 2 || length(clean_speed) ~= length(time)
-    error('Time and speed vectors must be same length and contain at least 2 points.');
+n = length(clean_speed);
+acc_vector = zeros(n, 1);
+for i = 1:n-1
+    acc_vector(i) = (clean_speed(i+1) - clean_speed(i)) / (time(i+1) - time(i));
 end
+acc_vector(n) = acc_vector(n-1);
 
 %% ____________________
 %% CALCULATIONS
 
 
-% find time step
-dt = time(2) - time(1);
-if dt <= 0
-    error('Time vector must be increasing.');
+threshold = 4; % same as in sub3
+window = 10;
+start_i = 1;
+
+while start_i <= (n - window)
+    avg_acc = mean(acc_vector(start_i:start_i + window - 1));
+    if avg_acc > threshold
+        break;
+    end
+    start_i = start_i + 1;
 end
 
-% points
-n = round(1 / dt);
-n = min(n, floor(length(clean_speed) / 2));  % keep in bounds
-
-% fail safe
-if n < 1
-    init_speed = NaN;
-    final_speed = NaN;
-    return;
+end_i = n - window;
+while end_i > start_i
+    % idx in bounds
+    window_end = min(end_i + window - 1, n);
+    
+    avg_acc = mean(abs(acc_vector(end_i:window_end)));
+    
+    if avg_acc > 0.15
+        break;
+    end
+    
+    end_i = end_i - 1;
 end
 
 
@@ -62,7 +73,7 @@ end
 %% ____________________
 %% RESULTS
 
-% Calculate average
+
 init_speed = mean(clean_speed(1:n));
 final_speed = mean(clean_speed(end-n+1:end));
 end
