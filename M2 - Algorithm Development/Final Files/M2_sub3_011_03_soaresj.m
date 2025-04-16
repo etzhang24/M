@@ -37,23 +37,24 @@ for count = 1:(time_count - 1)
     acc_vector(count) = ((speed(count + 1) - speed(count)) / (time(count + 1) - time(count)));
 end
 
-%Since the for loop only goes to the time_count -1 just set the last value
-%equal to the previous.
 acc_vector(time_count) = acc_vector(time_count - 1);
 
 
 %% ACCELERATION STARTING TIME
 
-acc_threshold = 0.1; %Can be adjusted if needed
+acc_threshold = 4;
 
-t_start_i = 1; %Starting the count at the first possible time.
+t_start_i = 1;
+window = 10;
 
-%Identifying where the acceleration breaks the threshold, at what time
-%index.
-while t_start_i < time_count && acc_vector(t_start_i) < acc_threshold
+while t_start_i <= (time_count - window)
+    avg_acc = mean(acc_vector(t_start_i:t_start_i + window - 1));
+    if avg_acc > acc_threshold
+        break;
+    end
     t_start_i = t_start_i + 1;
 end
-%Set the acceleration start time equal to the time at that index.
+
 acc_t = time(t_start_i);
 
 %% TIME CONSTANT
