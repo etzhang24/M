@@ -17,7 +17,7 @@ function [acc_t, t_const] = M2_sub3_011_03_soaresj(smooth_y, time)
 % 
 %
 % Function Call
-% function [acc_t, t_const] = M1B_sub1_011_03_soaresj(smooth_y, time)
+% function [acc_t, t_const] = M2_sub1_011_03_soaresj(smooth_y, time)
 %
 % Input Arguments
 % smooth_y --> Smoothed y values (m/s)
@@ -26,7 +26,7 @@ function [acc_t, t_const] = M2_sub3_011_03_soaresj(smooth_y, time)
 % acc_t --> Acceleration starting time (s)
 % t_const --> Time constant
 % Assignment Information
-%   Assignment:     M1B, Problem 1
+%   Assignment:     M2, Problem 1
 %   Team member:    John Soares, soaresj@purdue.edu 
 %   Team ID:        011-03
 %   Academic Integrity:
@@ -58,18 +58,17 @@ acc_vector(time_count) = acc_vector(time_count - 1);
 
 %% ACCELERATION STARTING TIME
 
-acc_threshold = 3; %the threshold for the slope for the wheel to be considered accelerating
-lcv = 0; %control variable used to end the acceleration start time loop when the time is found
+acc_threshold = 4; %the threshold for the slope for the wheel to be considered accelerating
 t_start_i = 1; %starting time index
 window = 10; %the window of data points used to calculate the slope
 
 %the below loop searches for a certain window where the average
 %acceleration is higher than the threshold, at this point the loop ends and
 %the time is recorded
-while (t_start_i <= (time_count - window)) && (lcv == 0)
+while t_start_i <= (time_count - window)
     avg_acc = mean(acc_vector(t_start_i:t_start_i + window - 1));
     if avg_acc > acc_threshold
-        lcv = 1;
+        break;
     end
     t_start_i = t_start_i + 1;
 end
@@ -85,8 +84,8 @@ acc_t = time(t_start_i);
 y_tau = initial_v + 0.632 * (final_v - initial_v);
 
 %preassigns the loop control value for finding the index of the time vector
-%corresponding to the time constant to 1
-t_tau_i = 1;
+%corresponding to the time constant to initial time
+t_tau_i = t_start_i;
 
 %this loop searches through the speed index until a speed greater than
 %y_tau is found at which point the loop ends and the corresponding index is

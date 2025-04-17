@@ -17,8 +17,8 @@ function M2_main_011_03_Zhan5173
 % none
 %
 % Assignment Information
-%   Assignment:     M1B, Problem 1
-%   Team member:    Name, Zhan5173@purdue.edu
+%   Assignment:     M2, Problem 1
+%   Team member:    Ethan Zhang, Zhan5173@purdue.edu
 %   Team ID:        011-03
 %   Academic Integrity:
 %     [x] We worked with one or more peers but our collaboration
@@ -34,6 +34,8 @@ function M2_main_011_03_Zhan5173
 data = readmatrix('Sp25_cruiseAuto_experimental_data.csv');
 time = data(:, 1);
 nTests = 45;
+
+
 
 %preassigns calculated data vectors as 0s
 acc_times = zeros(nTests,1);

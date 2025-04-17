@@ -28,10 +28,29 @@ function [outputData] = M2_sub2_011_03_clar1062(inputData)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 data = inputData;
-num_passes = 50; 
+n    = length(data);
+
+w_dip   = 11;                    % window length for median test
+half_d  = floor(w_dip/2);
+dip_thresh = 3;                 % m/s below median to consider a glitch
+num_passes_dip = 5;             % repeat
+
+for p = 1:num_passes_dip
+    for i = (half_d+1):(n-half_d)
+        window = data(i-half_d : i+half_d);
+        sorted = sort(window);
+        medval = sorted(half_d+1);
+        % if this point is too far below the local median, bump it up
+        if medval - data(i) > dip_thresh
+            data(i) = medval;
+        end
+    end
+end
+
+num_passes = 150; 
 
 %Gaussian kernel
-w = 7;              
+w = 11;              
 half_w = floor(w/2);  
 sigma = w / 3;
 x = -half_w:half_w;
@@ -67,3 +86,10 @@ for pass = 1:num_passes
 end
 
 outputData = smoothed;
+
+%% ____________________
+%% ACADEMIC INTEGRITY STATEMENT
+% We have not used source code obtained from any other unauthorized
+% source, either modified or unmodified. Neither have we provided
+% access to my code to another. The program we are submitting
+% is our own original work.
