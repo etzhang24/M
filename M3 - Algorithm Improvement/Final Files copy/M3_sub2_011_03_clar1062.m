@@ -1,4 +1,4 @@
-function [outputData] = M2_sub2_011_03_clar1062(inputData)
+function [outputData] = M3_sub2_011_03_clar1062(inputData)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 

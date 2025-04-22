@@ -1,4 +1,4 @@
-function [acc_t, t_const] = M2_sub3_011_03_soaresj(smooth_y, time)
+function [acc_t, t_const] = M3_sub3_011_03_soaresj(smooth_y, time)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
