@@ -1,4 +1,4 @@
-function [outputData] = M2_sub2_011_03_clar1062(inputData)
+function [outputData] = M3_sub2_011_03_clar1062(inputData)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
@@ -47,7 +47,7 @@ for p = 1:num_passes_dip
     end
 end
 
-num_passes = 150; 
+num_passes = 500; 
 
 %Gaussian kernel
 w = 11;              

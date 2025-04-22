@@ -1,4 +1,4 @@
-function [acc_t, t_const] = M2_sub3_011_03_soaresj(smooth_y, time)
+function [acc_t, t_const] = M3_sub3_011_03_soaresj(smooth_y, time)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
@@ -60,7 +60,7 @@ acc_vector(time_count) = acc_vector(time_count - 1);
 
 acc_threshold = 4; %the threshold for the slope for the wheel to be considered accelerating
 t_start_i = 1; %starting time index
-window = 10; %the window of data points used to calculate the slope
+window = 5; %the window of data points used to calculate the slope
 
 %the below loop searches for a certain window where the average
 %acceleration is higher than the threshold, at this point the loop ends and
@@ -78,7 +78,7 @@ acc_t = time(t_start_i);
 
 %% TIME CONSTANT
 %calls the function to find the initial and final velocities
-[initial_v, final_v] = M2_sub4_011_03_pteal(smooth_y, time, acc_t);
+[initial_v, final_v] = M3_sub4_011_03_pteal(smooth_y, time, acc_t);
 
 %calculates the value of the speed when the time is the time constant
 y_tau = initial_v + 0.632 * (final_v - initial_v);
