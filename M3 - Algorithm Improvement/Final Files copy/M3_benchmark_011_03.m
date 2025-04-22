@@ -1,4 +1,4 @@
-function [bench_comp, bench_sudan, bench_suv] = M3_benchmark_011_03(data)
+function [bench_comp, bench_sudan, bench_suv] = M3_benchmark_011_03(data, model_comp, model_sudan, model_suv)
 %M3_BENCHMARK_011_03 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -62,5 +62,41 @@ end
 bench_comp = y_comp;
 bench_sudan = y_sudan;
 bench_suv = y_suv;
+
+%Plotting value
+
+figure(1)
+plot(x_data, bench_comp, 'b*');
+title('Compact Hatchback Graphical Comparison');
+hold on
+grid on
+plot(x_data, model_comp, 'r-');
+xlabel('Time (s)');
+ylabel('Speed (m/s)');
+legend('Benchmark data', 'Model data', 'Location','southeast');
+hold off
+
+
+figure(2)
+plot(x_data, bench_sudan, 'b*');
+title('Sudan Graphical Comparison');
+hold on
+grid on
+plot(x_data, model_sudan, 'r-');
+xlabel('Time (s)');
+ylabel('Speed (m/s)');
+legend('Benchmark data', 'Model data', 'Location','southeast');
+hold off
+
+figure(3)
+plot(x_data, bench_suv, 'b*');
+title('SUV Graphical Comparison');
+hold on
+grid on
+plot(x_data, model_suv, 'r-');
+xlabel('Time (s)');
+ylabel('Speed (m/s)');
+legend('Benchmark data', 'Model data', 'Location','southeast');
+hold off
 end
 
