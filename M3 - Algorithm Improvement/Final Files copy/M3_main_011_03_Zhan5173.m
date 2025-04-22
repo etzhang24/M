@@ -31,9 +31,9 @@ function M3_main_011_03_Zhan5173
 %% ____________________
 %% INITIALIZATION
 %initializes the data, time vector, and the number of tests
-data = readmatrix('Sp25_cruiseAuto_experimental_data.csv');
+data = readmatrix('Sp25_cruiseAuto_M3benchmark_data.csv');
 time = data(:, 1);
-nTests = 45;
+nTests = (width(data)-1);
 
 
 
@@ -56,7 +56,7 @@ group_labels = {'Comp_{Win}', 'Comp_{AS}', 'Comp_{Sum}', ...
 %data
 for i = 1:nTests
     speed = data(:, i + 1);
-    clean_speed = M2_sub2_011_03_clar1062(speed);
+    clean_speed = M3_sub2_011_03_clar1062(speed);
 
 %error output if the speed data contains a NaN data point
     if any(isnan(clean_speed))
@@ -68,8 +68,8 @@ for i = 1:nTests
 
 %calls the 3rd and 4th subfunction to calculate each data set's
 %acceleration time, time constant, and initial/final speeds
-    [acc_t, t_const] = M2_sub3_011_03_soaresj(clean_speed, time);
-    [init_v, final_v] = M2_sub4_011_03_pteal(clean_speed, time, acc_t);
+    [acc_t, t_const] = M3_sub3_011_03_soaresj(clean_speed, time);
+    [init_v, final_v] = M3_sub4_011_03_pteal(clean_speed, time, acc_t);
 
 % Assigns the calculated values to their respective vectors so they can be
 % stored for the oputput
@@ -106,19 +106,19 @@ for g = 1:9
     start_col = (g - 1) * 5 + 2;
 
     % Plot and store labels manually
-    plot(time, M2_sub2_011_03_clar1062(data(:, start_col)));
+    plot(time, M3_sub2_011_03_clar1062(data(:, start_col)));
     label1 = [group_labels{g}, '1'];
 
-    plot(time, M2_sub2_011_03_clar1062(data(:, start_col + 1)));
+    plot(time, M3_sub2_011_03_clar1062(data(:, start_col + 1)));
     label2 = [group_labels{g}, '2'];
 
-    plot(time, M2_sub2_011_03_clar1062(data(:, start_col + 2)));
+    plot(time, M3_sub2_011_03_clar1062(data(:, start_col + 2)));
     label3 = [group_labels{g}, '3'];
 
-    plot(time, M2_sub2_011_03_clar1062(data(:, start_col + 3)));
+    plot(time, M3_sub2_011_03_clar1062(data(:, start_col + 3)));
     label4 = [group_labels{g}, '4'];
 
-    plot(time, M2_sub2_011_03_clar1062(data(:, start_col + 4)));
+    plot(time, M3_sub2_011_03_clar1062(data(:, start_col + 4)));
     label5 = [group_labels{g}, '5'];
 
     title([group_labels{g}]);
