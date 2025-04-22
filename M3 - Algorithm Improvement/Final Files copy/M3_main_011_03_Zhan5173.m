@@ -44,8 +44,8 @@ final_speeds = zeros(nTests,1);
 %% ____________________
 %% CALCULATIONS
 
-for i = 1:nTests
-    speed = T{:, i + 1};  %skip time
+for index = 1:nTests
+    speed = T{:, index + 1};  %skip time
     clean_speed = M3_sub2_011_03_clar1062(speed);
 
     if any(isnan(clean_speed))
@@ -56,10 +56,10 @@ for i = 1:nTests
     else
         [acc_t, t_const] = M3_sub3_011_03_soaresj(clean_speed, time);
         [init_v, final_v] = M3_sub4_011_03_pteal(clean_speed, time, acc_t);
-        acc_times(i) = acc_t;
-        time_consts(i) = t_const;
-        init_speeds(i) = init_v;
-        final_speeds(i) = final_v;
+        acc_times(index) = acc_t;
+        time_consts(index) = t_const;
+        init_speeds(index) = init_v;
+        final_speeds(index) = final_v;
     end
 end
 
