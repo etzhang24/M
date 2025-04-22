@@ -47,7 +47,7 @@ for p = 1:num_passes_dip
     end
 end
 
-num_passes = 1000; 
+num_passes = 500; 
 
 %Gaussian kernel
 w = 11;              
