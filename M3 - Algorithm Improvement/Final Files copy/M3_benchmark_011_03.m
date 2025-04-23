@@ -104,11 +104,17 @@ hold off
 %Compact
 sse_comp = sum(bench_comp - model_comp).^2 ./ length(bench_comp);
 
+fprintf("SSE for Compact Hatchback: %.2f\n", sse_comp);
+
 %Sudan
 sse_sudan = sum(bench_sudan - model_sudan).^2 ./ length(bench_sudan);
 
+fprintf("SSE for Sudan: %.2f\n", sse_sudan);
+
 %SUV
 sse_suv = sum(bench_suv - model_suv).^2 ./ length(bench_suv);
+
+fprintf("SSE for SUV: %.2f\n", sse_suv);
 
 
 end
