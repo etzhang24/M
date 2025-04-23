@@ -98,5 +98,18 @@ xlabel('Time (s)');
 ylabel('Speed (m/s)');
 legend('Benchmark data', 'Model data', 'Location','southeast');
 hold off
+
+%SSE calculations
+
+%Compact
+sse_comp = sum(bench_comp - model_comp).^2 ./ length(bench_comp);
+
+%Sudan
+sse_sudan = sum(bench_sudan - model_sudan).^2 ./ length(bench_sudan);
+
+%SUV
+sse_suv = sum(bench_suv - model_suv).^2 ./ length(bench_suv);
+
+
 end
 
