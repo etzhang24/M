@@ -1,6 +1,19 @@
-function [bench_comp, bench_sudan, bench_suv] = M3_benchmark_011_03(data, model_comp, model_sudan, model_suv)
+function M3_benchmark_011_03(data, model_comp, model_sudan, model_suv)
 %M3_BENCHMARK_011_03 Summary of this function goes here
-%   Detailed explanation goes here
+%
+%INPUTS:
+%data = new data given
+%model_comp = model for Compact Hatchback y-values
+%model_sudan = model for Sudan y-values
+%model_suv = model for SUV y-values
+%
+%OUTPUTS:
+%NaN - Function outputs graphs and prints SSE values.
+%
+% Program description: The function serves to create the benchmark data and
+% compare the benchmark data with the model created by the group through a
+% graphical comparison and numerical analysis given by the SSE values
+% calculated.
 
 
 %Compact Hatchback benchmark parameters
