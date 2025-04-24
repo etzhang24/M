@@ -18,7 +18,7 @@ function M3_main_011_03_Zhan5173
 % none
 %
 % Assignment Information
-%   Assignment:     M3, Problem 1
+%   Assignment:     M3, Problem 4b
 %   Team member:    Ethan Zhang, Zhan5173@purdue.edu
 %   Team ID:        011-03
 %   Academic Integrity:
