@@ -87,9 +87,9 @@ for kindex = 1:3
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
     % Plot comparison
-    figure(kindex)
+    subplot(3,1,kindex);
     plot(time, speed, 'b-', 'DisplayName','Benchmark Data'); hold on;
-    plot(time, model, 'r-', 'DisplayName','First Order Model', LineWidth = 1.5);
+    plot(time, model, 'r-', 'DisplayName','First Order Model', 'LineWidth', 1.5);
     title(vehicleNames{kindex});
     xlabel('Time (s)');
     ylabel('Speed (m/s)');
@@ -99,6 +99,7 @@ end
 
 %% ____________________
 %% RESULTS
+
 % printing results
 for kkindex = 1:3
     fprintf("\n%s\n", vehicleNames{kkindex});
