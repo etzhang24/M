@@ -54,47 +54,49 @@ target_ts = 5.0;
 % Build performance bounds once on the normal time axis
 left_model = zeros(n,1);
 right_model = zeros(n,1);
-for i = 1:n
-    t = time(i);
+for index = 1:n
+    t = time(index);
     if t < target_ts
-        left_model(i) = yL_bounds(1);
-        right_model(i) = yL_bounds(2);
+        left_model(index) = yL_bounds(1);
+        right_model(index) = yL_bounds(2);
     else
-        left_model(i) = yL_bounds(1) + (yH_bounds(1) - yL_bounds(1)) * (1 - exp(-(t - target_ts)/tau_bounds(1)));
-        right_model(i) = yL_bounds(2) + (yH_bounds(2) - yL_bounds(2)) * (1 - exp(-(t - target_ts)/tau_bounds(2)));
+        left_model(index) = yL_bounds(1) + (yH_bounds(1) - ...
+            yL_bounds(1)) * (1 - exp(-(t - target_ts)/tau_bounds(1)));
+        right_model(index) = yL_bounds(2) + (yH_bounds(2) - ...
+            yL_bounds(2)) * (1 - exp(-(t - target_ts)/tau_bounds(2)));
     end
 end
 
 % Plot each vehicle
 figure;
-for k = 1:3
-    yL = yL_vals(k);
-    yH = yH_vals(k);
-    tau = tau_vals(k);
-    ts = ts_vals(k);
+for kindex = 1:3
+    yL = yL_vals(kindex);
+    yH = yH_vals(kindex);
+    tau = tau_vals(kindex);
+    ts = ts_vals(kindex);
 
     % Shift the data
     time_shifted = time - (ts - 5.0);
 
     % Build your model using ts = 5
     your_model = zeros(n,1);
-    for i = 1:n
-        t = time(i);
+    for iindex = 1:n
+        t = time(iindex);
         if t < target_ts
-            your_model(i) = yL;
+            your_model(iindex) = yL;
         else
-            your_model(i) = yL + (yH - yL) * (1 - exp(-(t - target_ts)/tau));
+            your_model(iindex) = yL + (yH - yL) * (1 - exp(-(t - target_ts)/tau));
         end
     end
 
     % Plot 
     sgtitle('Performance Boundary Evaluation, Model Validity at Standardized Start Time');
-    subplot(3,1,k);
-    plot(time_shifted, speeds(:,k), 'b-', 'DisplayName','Benchmark Data'); hold on;
+    subplot(3,1,kindex);
+    plot(time_shifted, speeds(:,kindex), 'b-', 'DisplayName','Benchmark Data'); hold on;
     plot(time, your_model, 'r--', 'DisplayName','First Order Model');
     plot(time, left_model, 'k:', 'DisplayName','Left Bound', 'LineWidth', 2);
     plot(time, right_model, 'k--', 'DisplayName','Right Bound', 'LineWidth', 2);
-    title(vehicleNames{k});
+    title(vehicleNames{kindex});
     xlabel('Time (s)');
     ylabel('Speed (m/s)');
     legend('Location','southeast');
