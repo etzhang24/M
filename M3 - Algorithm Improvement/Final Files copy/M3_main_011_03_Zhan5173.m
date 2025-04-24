@@ -86,7 +86,7 @@ for kindex = 1:3
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
 
-    %plotting the benchmark datat vs our model
+    %plotting the benchmark data vs our model
     sgtitle('Benchmark Data vs. Algorithm Generated Model, Parameter Estimation Accuracy');
     subplot(3,1,kindex);
     plot(time, speed, 'b-', 'DisplayName','Benchmark Data'); hold on;
