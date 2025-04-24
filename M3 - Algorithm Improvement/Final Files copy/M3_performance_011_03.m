@@ -95,7 +95,7 @@ for kindex = 1:3
         end
     end
 
-    % Plot 
+    % Plotting 
     sgtitle('Performance Boundary Evaluation, Model Validity at Standardized Start Time');
     subplot(3,1,kindex);
     plot(time_shifted, speeds(:,kindex), 'b-', 'DisplayName','Benchmark Data'); hold on;

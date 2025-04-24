@@ -110,6 +110,7 @@ ylabel('Speed (m/s)');
 legend('Benchmark Data', 'Ideal Model', 'Location', 'best');
 grid on;
 
+%subplot 2
 subplot(3,1,2);
 plot(time, speed_sedan, 'b-');
 hold on;
@@ -120,6 +121,8 @@ ylabel('Speed (m/s)');
 legend('Benchmark Data', 'Ideal Model', 'Location', 'best');
 grid on;
 
+
+% subplot 3
 subplot(3,1,3);
 plot(time, speed_suv, 'b-');
 hold on;

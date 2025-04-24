@@ -45,7 +45,7 @@ ref_yL = [-0.09, -0.22, 0.19];
 ref_yH = [25.08, 24.72, 24.18];
 vehicleNames = {'Compact Hatchback', 'Midsize Sedan', 'SUV'};
 
-% Preallocate
+% Preallocate vectors
 ts_vals = zeros(1,3);
 tau_vals = zeros(1,3);
 yL_vals = zeros(1,3);
@@ -85,8 +85,9 @@ for kindex = 1:3
 
 %% ____________________
 %% FORMATTED TEXT/FIGURE DISPLAYS
+
+    %plotting the benchmark datat vs our model
     sgtitle('Benchmark Data vs. Algorithm Generated Model, Parameter Estimation Accuracy');
-    % Plot comparison
     subplot(3,1,kindex);
     plot(time, speed, 'b-', 'DisplayName','Benchmark Data'); hold on;
     plot(time, model, 'r-', 'DisplayName','First Order Model', 'LineWidth', 1.5);
@@ -100,7 +101,7 @@ end
 %% ____________________
 %% RESULTS
 
-% printing results
+% printing results for all parameters in command window
 for kkindex = 1:3
     fprintf("\n%s\n", vehicleNames{kkindex});
     fprintf("Estimated ts: %.2f, Reference: %.2f, Error: %.2f%%\n", ...
