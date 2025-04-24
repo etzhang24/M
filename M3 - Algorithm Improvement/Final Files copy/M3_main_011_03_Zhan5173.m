@@ -38,7 +38,7 @@ time = T(:,1);
 speeds = T(:,2:4);
 n = length(time);
 
-% Reference parameters
+% Reference algorithm parameters
 ref_ts = [6.21, 9.39, 6.85];
 ref_tau = [1.51, 1.96, 2.80];
 ref_yL = [-0.09, -0.22, 0.19];
