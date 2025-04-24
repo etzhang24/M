@@ -99,6 +99,7 @@ fprintf("Modified SSE (SUV): %.4f\n", sse_suv);
 
 % graph results
 figure;
+sgtitle('Benchmark Data vs. Ideal Model, Noise Evaluation Using Reference Parameters');
 subplot(3,1,1);
 plot(time, speed_compact, 'b-');
 hold on;

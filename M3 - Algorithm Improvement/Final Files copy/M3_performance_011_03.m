@@ -88,6 +88,7 @@ for k = 1:3
     end
 
     % Plot 
+    sgtitle('Performance Boundary Evaluation, Model Validity at Standardized Start Time');
     subplot(3,1,k);
     plot(time_shifted, speeds(:,k), 'b-', 'DisplayName','Benchmark Data'); hold on;
     plot(time, your_model, 'r--', 'DisplayName','First Order Model');
