@@ -1,19 +1,30 @@
 function M3_benchmark_011_03
-%M3_BENCHMARK_011_03 Part 4a: Quantify noise error in benchmark
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENGR 132 
+% Program Description 
+% This function generates ideal model curves and plots them against the 
+% benchmark data
 %
-%INPUTS:
-% data = new data given
-% model_comp = model for Compact Hatchback y-values
-% model_sudan = model for Sudan y-values
-% model_suv = model for SUV y-values
+% Function Call
+% M3_benchmark_011_03
 %
-%OUTPUTS:
-% NaN - Function outputs graphs and prints SSE values.
+% Input Arguments
+% None
 %
-% Program description: The function takes the benchmark data and
-% compares the benchmark data with the model created by the group through a
-% graphical comparison and numerical analysis by the SSE values
-% calculated.
+% Output Arguments
+% None
+%
+% Assignment Information
+%   Assignment:     M3 , Problem 4a
+%   Team member:    John Soares, soaresj@purdue.edu
+%   Team ID:        011-03
+%   Academic Integrity:
+%     [x] We worked with one or more peers but our collaboration
+%        maintained academic integrity.
+%     Peers we worked with: Ethan Zhang, Zhan5173@purdue.edu
+%                           Peter Teal, pteal@purdue.edu
+%                           Justin Clark, clar1062@purdue.edu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% ____________________
 %% INITIALIZATION
