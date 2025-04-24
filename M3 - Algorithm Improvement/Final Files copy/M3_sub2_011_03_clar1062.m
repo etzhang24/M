@@ -6,7 +6,7 @@ function [outputData] = M3_sub2_011_03_clar1062(inputData)
 % This is a gaussian window function
 %
 % Function Call
-% function [outputData] = M2_sub2_011_03_clar1062(inputData)
+% function [outputData] = M3_sub2_011_03_clar1062(inputData)
 %
 % Input Arguments
 %  inputData - this is the velocity data that gets passed into this
@@ -16,7 +16,7 @@ function [outputData] = M3_sub2_011_03_clar1062(inputData)
 %  outputData - this is the data that is outputted once its been "cleaned"
 %
 % Assignment Information
-%   Assignment:     M2, Subfunction 2
+%   Assignment:     M3, Subfunction 2
 %   Team member:    Justin Clark, clar1062@purdue.edu
 %   Team ID:        011-03
 %   Academic Integrity:

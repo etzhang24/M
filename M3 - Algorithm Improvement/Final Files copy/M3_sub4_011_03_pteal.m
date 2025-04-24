@@ -8,7 +8,7 @@ function [init_speed, final_speed] = M3_sub4_011_03_pteal(clean_speed, time, acc
 % data to then be outputted as the final speed.
 %
 % Function Call
-% function [init_speed, final_speed] = M2_sub4_011_03_pteal(clean_speed, time, acc_t)
+% function [init_speed, final_speed] = M3_sub4_011_03_pteal(clean_speed, time, acc_t)
 %
 % Input Arguments
 % clean_speed - this is the cleaned speed data that is being analyzed
@@ -20,7 +20,7 @@ function [init_speed, final_speed] = M3_sub4_011_03_pteal(clean_speed, time, acc
 % final_speed - this is the speed of the wheel it it is done accelerating
 %
 % Assignment Information
-%   Assignment:     M2, Problem 1
+%   Assignment:     M3, Problem 1
 %   Team member:    Peter Teal, pteal@purdue.edu 
 %   Team ID:        011-03
 %   Academic Integrity:
