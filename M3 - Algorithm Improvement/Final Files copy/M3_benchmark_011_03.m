@@ -1,134 +1,112 @@
-function M3_benchmark_011_03(data, model_comp, model_sudan, model_suv)
-%M3_BENCHMARK_011_03 Summary of this function goes here
+function M3_benchmark_011_03
+%M3_BENCHMARK_011_03 Part 4a: Quantify noise error in benchmark
 %
 %INPUTS:
-%data = new data given
-%model_comp = model for Compact Hatchback y-values
-%model_sudan = model for Sudan y-values
-%model_suv = model for SUV y-values
+% data = new data given
+% model_comp = model for Compact Hatchback y-values
+% model_sudan = model for Sudan y-values
+% model_suv = model for SUV y-values
 %
 %OUTPUTS:
-%NaN - Function outputs graphs and prints SSE values.
+% NaN - Function outputs graphs and prints SSE values.
 %
-% Program description: The function serves to create the benchmark data and
-% compare the benchmark data with the model created by the group through a
-% graphical comparison and numerical analysis given by the SSE values
+% Program description: The function takes the benchmark data and
+% compares the benchmark data with the model created by the group through a
+% graphical comparison and numerical analysis by the SSE values
 % calculated.
 
+% Load benchmark data
+data = readmatrix('Sp25_cruiseAuto_M3benchmark_data.csv');
+time = data(:,1);
+speed_compact = data(:,2);
+speed_sedan = data(:,3);
+speed_suv = data(:,4);
+n = length(time);
 
-%Compact Hatchback benchmark parameters
-comp_ts = 6.21; %Acceleration start time (s)
-comp_tau = 1.51; %Time constant (s)
-comp_ispeed = -0.09; %Initial speed (m/s)
-comp_fspeed = 25.08; %Final speed (m/s)
+% Benchmark parameters from M0
+ts_compact = 6.21;
+tau_compact = 1.51;
+yL_compact = -0.09;
+yH_compact = 25.08;
 
-%Midsize Sudan benchmark parameters
-sudan_ts = 9.39; %Acceleration start time (s)
-sudan_tau = 1.96; %Time constant (s)
-sudan_ispeed = -0.22; %Initial speed (m/s)
-sudan_fspeed = 24.72; %Final speed (m/s)
+ts_sedan = 9.39;
+tau_sedan = 1.96;
+yL_sedan = -0.22;
+yH_sedan = 24.72;
 
-%SUV benchmark parameters
-suv_ts = 6.85; %Acceleration start time (s)
-suv_tau = 2.80; %Time constant (s)
-suv_ispeed = 0.19; %Initial speed (m/s)
-suv_fspeed = 24.18; %Final speed (m/s)
+ts_suv = 6.85;
+tau_suv = 2.80;
+yL_suv = 0.19;
+yH_suv = 24.18;
 
+% Create ideal models initialize vectors
+model_compact = zeros(n,1);
+model_sedan = zeros(n,1);
+model_suv = zeros(n,1);
 
-%For loops
-
-%Control variable for loop, and input
-x_data = data(:,1);
-count_x = length(x_data);
-
-y_comp = [];
-y_sudan =[];
-y_suv = [];
-
-%For loop to calculate y-values for each of the cars
-for count = 1:count_x
-    %Compact Hatchback y-values
-    if(0 <= x_data(count) && x_data(count) < comp_ts)
-        y_comp = [y_comp, comp_ispeed];
-    elseif(x_data(count) >= comp_ts)
-        y_c = comp_ispeed + (comp_fspeed - comp_ispeed) * (1 - exp(-(x_data(count) - comp_ts) / (comp_tau)));
-        y_comp = [y_comp, y_c];
+%loop to plot ideal models
+for index = 1:n
+    t = time(index);
+    if t < ts_compact
+        model_compact(index) = yL_compact;
+    else
+        model_compact(index) = yL_compact + (yH_compact - yL_compact)...
+            * (1 - exp(-(t - ts_compact) / tau_compact));
     end
-    %Sudan y-values
-    if(0 <= x_data(count) && x_data(count) < sudan_ts)
-        y_sudan = [y_sudan, sudan_ispeed];
-    elseif(x_data(count) >= sudan_ts)
-        y_s = sudan_ispeed + (sudan_fspeed - sudan_ispeed) * (1 - exp(-(x_data(count) - sudan_ts) / (sudan_tau)));
-        y_sudan = [y_sudan, y_s];
+    if t < ts_sedan
+        model_sedan(index) = yL_sedan;
+    else
+        model_sedan(index) = yL_sedan + (yH_sedan - yL_sedan) ...
+            * (1 - exp(-(t - ts_sedan) / tau_sedan));
     end
-    %SUV y-values
-    if(0 <= x_data(count) && x_data(count) < suv_ts)
-        y_suv = [y_suv, suv_ispeed];
-    elseif(x_data(count) >= suv_ts)
-        y_sv = suv_ispeed + (suv_fspeed - suv_ispeed) * (1 - exp(-(x_data(count) - suv_ts) / (suv_tau)));
-        y_suv = [y_suv, y_sv];
+    if t < ts_suv
+        model_suv(index) = yL_suv;
+    else
+        model_suv(index) = yL_suv + (yH_suv - yL_suv) * ...
+            (1 - exp(-(t - ts_suv) / tau_suv));
     end
 end
 
-%Outputs being assigned to the values created by the for loop.
+% Calculate modified SSE
+sse_compact = sum((speed_compact - model_compact).^2) / n;
+sse_sedan = sum((speed_sedan - model_sedan).^2) / n;
+sse_suv = sum((speed_suv - model_suv).^2) / n;
 
-bench_comp = y_comp;
-bench_sudan = y_sudan;
-bench_suv = y_suv;
+% Print results
+fprintf("Modified SSE (Compact Hatchback): %.4f\n", sse_compact);
+fprintf("Modified SSE (Midsize Sedan): %.4f\n", sse_sedan);
+fprintf("Modified SSE (SUV): %.4f\n", sse_suv);
 
-%Plotting value
-
-figure(1)
-plot(x_data, bench_comp, 'b*');
-title('Compact Hatchback Graphical Comparison');
-hold on
-grid on
-plot(x_data, model_comp, 'r-');
+% graph results
+figure;
+subplot(3,1,1);
+plot(time, speed_compact, 'b-');
+hold on;
+plot(time, model_compact, 'r-', LineWidth = 1.5);
+title('Compact Hatchback');
 xlabel('Time (s)');
 ylabel('Speed (m/s)');
-legend('Benchmark data', 'Model data', 'Location','southeast');
-hold off
+legend('Benchmark Data', 'Ideal Model', 'Location', 'best');
+grid on;
 
-
-figure(2)
-plot(x_data, bench_sudan, 'b*');
-title('Sudan Graphical Comparison');
-hold on
-grid on
-plot(x_data, model_sudan, 'r-');
+subplot(3,1,2);
+plot(time, speed_sedan, 'b-');
+hold on;
+plot(time, model_sedan, 'r-', LineWidth = 1.5);
+title('Midsize Sedan');
 xlabel('Time (s)');
 ylabel('Speed (m/s)');
-legend('Benchmark data', 'Model data', 'Location','southeast');
-hold off
+legend('Benchmark Data', 'Ideal Model', 'Location', 'best');
+grid on;
 
-figure(3)
-plot(x_data, bench_suv, 'b*');
-title('SUV Graphical Comparison');
-hold on
-grid on
-plot(x_data, model_suv, 'r-');
+subplot(3,1,3);
+plot(time, speed_suv, 'b-');
+hold on;
+plot(time, model_suv, 'r-', LineWidth = 1.5);
+title('SUV');
 xlabel('Time (s)');
 ylabel('Speed (m/s)');
-legend('Benchmark data', 'Model data', 'Location','southeast');
-hold off
-
-%SSE calculations
-
-%Compact
-sse_comp = sum(bench_comp - model_comp).^2 ./ length(bench_comp);
-
-fprintf("SSE for Compact Hatchback: %.2f\n", sse_comp);
-
-%Sudan
-sse_sudan = sum(bench_sudan - model_sudan).^2 ./ length(bench_sudan);
-
-fprintf("SSE for Sudan: %.2f\n", sse_sudan);
-
-%SUV
-sse_suv = sum(bench_suv - model_suv).^2 ./ length(bench_suv);
-
-fprintf("SSE for SUV: %.2f\n", sse_suv);
-
+legend('Benchmark Data', 'Ideal Model', 'Location', 'best');
+grid on;
 
 end
-
