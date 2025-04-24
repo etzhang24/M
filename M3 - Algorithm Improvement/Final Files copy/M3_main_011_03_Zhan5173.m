@@ -119,7 +119,11 @@ for kkindex = 1:3
     fprintf("Modified SSE: %.4f\n", sse_vals(kkindex));
 end
 
+plot(time, clean_speed, 'k');
+
 end
+
+
     
 %% ____________________
 %% ACADEMIC INTEGRITY STATEMENT
