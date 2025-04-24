@@ -61,7 +61,7 @@ model_suv = zeros(n,1);
 %% ____________________
 %% CALCULATIONS
 
-%loop to plot ideal models
+%loop to plot ideal models using set parameters
 for index = 1:n
     t = time(index);
     if t < ts_compact

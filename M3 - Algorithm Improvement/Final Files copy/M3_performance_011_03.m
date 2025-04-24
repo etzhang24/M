@@ -51,6 +51,9 @@ yH_bounds = [25.82, 23.36];
 
 target_ts = 5.0;
 
+%% ____________________
+%% CALCULATIONS
+
 % Build performance bounds once on the normal time axis
 left_model = zeros(n,1);
 right_model = zeros(n,1);
@@ -66,6 +69,9 @@ for index = 1:n
             yL_bounds(2)) * (1 - exp(-(t - target_ts)/tau_bounds(2)));
     end
 end
+
+%% ____________________
+%% FORMATTED TEXT/FIGURE DISPLAYS
 
 % Plot each vehicle
 figure;
@@ -103,3 +109,10 @@ for kindex = 1:3
     grid on;
 end
 end
+
+%% ____________________
+%% ACADEMIC INTEGRITY STATEMENT
+% We have not used source code obtained from any other unauthorized
+% source, either modified or unmodified. Neither have we provided
+% access to my code to another. The program we are submitting
+% is our own original work.
