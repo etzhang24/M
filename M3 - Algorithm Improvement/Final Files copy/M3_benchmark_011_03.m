@@ -15,6 +15,9 @@ function M3_benchmark_011_03
 % graphical comparison and numerical analysis by the SSE values
 % calculated.
 
+%% ____________________
+%% INITIALIZATION
+
 % Load benchmark data
 data = readmatrix('Sp25_cruiseAuto_M3benchmark_data.csv');
 time = data(:,1);
@@ -44,6 +47,9 @@ model_compact = zeros(n,1);
 model_sedan = zeros(n,1);
 model_suv = zeros(n,1);
 
+%% ____________________
+%% CALCULATIONS
+
 %loop to plot ideal models
 for index = 1:n
     t = time(index);
@@ -71,6 +77,9 @@ end
 sse_compact = sum((speed_compact - model_compact).^2) / n;
 sse_sedan = sum((speed_sedan - model_sedan).^2) / n;
 sse_suv = sum((speed_suv - model_suv).^2) / n;
+
+%% ____________________
+%% FORMATTED TEXT/FIGURE DISPLAYS
 
 % Print results
 fprintf("Modified SSE (Compact Hatchback): %.4f\n", sse_compact);
@@ -110,3 +119,10 @@ legend('Benchmark Data', 'Ideal Model', 'Location', 'best');
 grid on;
 
 end
+
+%% ____________________
+%% ACADEMIC INTEGRITY STATEMENT
+% We have not used source code obtained from any other unauthorized
+% source, either modified or unmodified. Neither have we provided
+% access to my code to another. The program we are submitting
+% is our own original work.
