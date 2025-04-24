@@ -79,13 +79,13 @@ for kindex = 1:3
     time_shifted = time - (ts - 5.0);
 
     % Build your model using ts = 5
-    your_model = zeros(n,1);
+    model = zeros(n,1);
     for iindex = 1:n
         t = time(iindex);
         if t < target_ts
-            your_model(iindex) = yL;
+            model(iindex) = yL;
         else
-            your_model(iindex) = yL + (yH - yL) * (1 - exp(-(t - target_ts)/tau));
+            model(iindex) = yL + (yH - yL) * (1 - exp(-(t - target_ts)/tau));
         end
     end
 
@@ -93,7 +93,7 @@ for kindex = 1:3
     sgtitle('Performance Boundary Evaluation, Model Validity at Standardized Start Time');
     subplot(3,1,kindex);
     plot(time_shifted, speeds(:,kindex), 'b-', 'DisplayName','Benchmark Data'); hold on;
-    plot(time, your_model, 'r--', 'DisplayName','First Order Model');
+    plot(time, model, 'r-', 'DisplayName','First Order Model', LineWidth = 1.5);
     plot(time, left_model, 'k:', 'DisplayName','Left Bound', 'LineWidth', 2);
     plot(time, right_model, 'k--', 'DisplayName','Right Bound', 'LineWidth', 2);
     title(vehicleNames{kindex});
