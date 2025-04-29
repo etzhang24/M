@@ -60,4 +60,3 @@ final_speed = mean(clean_speed(length_data - 500: length_data));
 % is our own original work.
 
 
-
