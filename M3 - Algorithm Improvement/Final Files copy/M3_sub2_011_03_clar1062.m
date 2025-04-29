@@ -50,9 +50,9 @@ end
 num_passes = 500; 
 
 %Gaussian kernel
-w = 11;              
+w = 3;              
 half_w = floor(w/2);  
-sigma = w / 3;
+sigma = w / 7;
 x = -half_w:half_w;
 gauss_kernel = exp(-(x.^2) / (2 * sigma^2));
 gauss_kernel = gauss_kernel / sum(gauss_kernel); 
