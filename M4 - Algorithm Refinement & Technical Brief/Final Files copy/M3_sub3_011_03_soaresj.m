@@ -60,7 +60,7 @@ acc_vector(time_count) = acc_vector(time_count - 1);
 
 acc_threshold = 4; %the threshold for the slope for the wheel to be considered accelerating
 t_start_i = 1; %starting time index
-window = 5; %the window of data points used to calculate the slope
+window = 9; %the window of data points used to calculate the slope
 
 %the below loop searches for a certain window where the average
 %acceleration is higher than the threshold, at this point the loop ends and
