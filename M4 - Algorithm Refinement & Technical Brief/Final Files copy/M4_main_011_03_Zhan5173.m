@@ -121,6 +121,64 @@ end
 
 plot(time, clean_speed, 'k');
 
+%part 4b, printing parameters of 45 testts
+data = readtable('Sp25_cruiseAuto_experimental_data.csv');
+labels = {
+    'CH Summer', 'CH All-Season', 'CH Winter', ...
+    'MS Summer', 'MS All-Season', 'MS Winter', ...
+    'SUV Summer', 'SUV All-Season', 'SUV Winter'};
+
+avgResults_M3 = zeros(9, 4); % ts, tau, yL, yH
+avgResults_M4 = zeros(9, 4);
+
+for i = 1:9
+    idxStart = (i-1)*5 + 1;
+    idxEnd = idxStart + 4;
+
+    m3_group = zeros(5, 4);
+    m4_group = zeros(5, 4);
+
+    for j = 1:5
+        colIdx = idxStart + j - 1;
+        y = table2array(data(:, colIdx+1)); % +1 to account for time in column 1
+        t = table2array(data(:, 1)); % time vector
+
+        % Run M3 algorithm
+        
+        cleaned_speed = M3_sub2_011_03_clar1062(y);
+        [ts, tau] = M4_sub3_011_03_soaresj(cleaned_speed, t);
+        [yL, yH] = M4_sub4_011_03_pteal(cleaned_speed, t, ts);
+        m3_group(j, :) = [ts, tau, yL, yH];
+
+        % Run M4 algorithm 
+        
+        cleaned_speed_M4 = M4_sub2_011_03_clar1062(y);
+        [tsM4, tauM4] = M4_sub3_011_03_soaresj(cleaned_speed_M4, t);
+        [yLM4, yHM4] = M4_sub4_011_03_pteal(cleaned_speed_M4, t, tsM4);
+        m4_group(j, :) = [tsM4, tauM4, yLM4, yHM4];
+    end
+
+    avgResults_M3(i, :) = mean(m3_group, 1, 'omitnan');
+    avgResults_M4(i, :) = mean(m4_group, 1, 'omitnan');
+end
+
+% Print a table to the console
+fprintf('\nTable 4b.1 – M3 and M4 Algorithm Comparison of Experimental Data Parameters\n\n');
+fprintf('%-25s %-8s %-8s %-10s %-10s %-8s %-8s %-10s %-10s\n', ...
+    'Vehicle-Tire', ...
+    'M3_ts', 'M3_tau', 'M3_yL', 'M3_yH', ...
+    'M4_ts', 'M4_tau', 'M4_yL', 'M4_yH');
+
+for i = 1:9
+    fprintf('%-25s %-8.2f %-8.2f %-10.2f %-10.2f %-8.2f %-8.2f %-10.2f %-10.2f\n', ...
+        labels{i}, ...
+        avgResults_M3(i,1), avgResults_M3(i,2), ...
+        avgResults_M3(i,3), avgResults_M3(i,4), ...
+        avgResults_M4(i,1), avgResults_M4(i,2), ...
+        avgResults_M4(i,3), avgResults_M4(i,4));
+end
+
+
 end
 
 
