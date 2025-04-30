@@ -45,6 +45,11 @@ length_data = length(clean_speed);
 %assigns the value of the initial speed to be the average of the speeds of
 %the wheel from when the data collection starts to when it starts
 %accelerating
+
+%CHANGE MADE FROM M3 : I accounted for our error in the start time by
+%having the average for initial speed include 40 extra indexes after our detected 
+%acceleration start time since our dected acceleration start time was slightly before the benchmark acceleration start
+%time
 init_speed = mean(clean_speed(1: start_idx + 40));
 
 %calculates the final speed by finding the average of the last 500 speed
