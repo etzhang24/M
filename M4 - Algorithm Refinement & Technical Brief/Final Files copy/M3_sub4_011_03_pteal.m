@@ -45,7 +45,7 @@ length_data = length(clean_speed);
 %assigns the value of the initial speed to be the average of the speeds of
 %the wheel from when the data collection starts to when it starts
 %accelerating
-init_speed = mean(clean_speed(100: start_idx - 5));
+init_speed = mean(clean_speed(1: start_idx + 40));
 
 %calculates the final speed by finding the average of the last 500 speed
 %data points which corresponds to the average speed of the wheel in the
