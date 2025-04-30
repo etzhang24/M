@@ -1,4 +1,4 @@
-function [init_speed, final_speed] = M3_sub4_011_03_pteal(clean_speed, time, acc_t)
+function [init_speed, final_speed] = M4_sub4_011_03_pteal(clean_speed, time, acc_t)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description 
