@@ -29,19 +29,20 @@ function M4_performance_011_03
 %% ____________________
 %% INITIALIZATION
 
-% Load benchmark time and speed data
-data = readmatrix('Sp25_cruiseAuto_M3benchmark_data.csv');
-time = data(:,1);
-speeds = data(:,2:4);
+% time vector
+time = linspace(0, 50, 5001)';
 n = length(time);
 
-vehicleNames = {'Compact Hatchback', 'Midsize Sedan', 'SUV'};
+% Vehicle and Tire Labels
+labels = { ...
+    'Compact Hatchback - Summer', 'Compact Hatchback - All-Season', 'Compact Hatchback - Winter', ...
+    'Midsize Sedan - Summer', 'Midsize Sedan - All-Season', 'Midsize Sedan - Winter', ...
+    'Large SUV - Summer', 'Large SUV - All-Season', 'Large SUV - Winter'};
 
-% outputs from Part 4b
-ts_vals = [5.86, 9.17, 6.94];
-tau_vals = [1.98, 2.29, 2.83];
-yL_vals = [-0.13, -0.26, 0.23];
-yH_vals = [24.97, 24.60, 24.11];
+% Parameters from Part 4b (M4 outputs)
+tau_vals = [2.78, 1.87, 1.57, 2.80, 2.01, 1.56, 3.77, 2.46, 3.07];
+yL_vals  = [-0.03, 0.00, 0.00, -0.04, 0.00, 0.00, -0.03, -0.02, -0.02];
+yH_vals  = [25.06, 24.92, 24.67, 24.94, 24.89, 24.95, 23.64, 24.03, 24.06];
 
 % Performance bounds from M0
 ts_bounds = [4.5, 6.0];
@@ -51,10 +52,7 @@ yH_bounds = [25.82, 23.36];
 
 target_ts = 5.0;
 
-%% ____________________
-%% CALCULATIONS
-
-% Build performance bounds once on the normal time axis
+% Generate performance bounds curves
 left_model = zeros(n,1);
 right_model = zeros(n,1);
 for index = 1:n
@@ -63,46 +61,38 @@ for index = 1:n
         left_model(index) = yL_bounds(1);
         right_model(index) = yL_bounds(2);
     else
-        left_model(index) = yL_bounds(1) + (yH_bounds(1) - ...
-            yL_bounds(1)) * (1 - exp(-(t - target_ts)/tau_bounds(1)));
-        right_model(index) = yL_bounds(2) + (yH_bounds(2) - ...
-            yL_bounds(2)) * (1 - exp(-(t - target_ts)/tau_bounds(2)));
+        left_model(index) = yL_bounds(1) + (yH_bounds(1) - yL_bounds(1)) * ...
+            (1 - exp(-(t - target_ts)/tau_bounds(1)));
+        right_model(index) = yL_bounds(2) + (yH_bounds(2) - yL_bounds(2)) * ...
+            (1 - exp(-(t - target_ts)/tau_bounds(2)));
     end
 end
 
-%% ____________________
-%% FORMATTED TEXT/FIGURE DISPLAYS
+%% PLOTTING
 
-% Plot each vehicle
 figure;
-for kindex = 1:3
-    yL = yL_vals(kindex);
-    yH = yH_vals(kindex);
-    tau = tau_vals(kindex);
-    ts = ts_vals(kindex);
+sgtitle('Performance Boundary Evaluation for All Vehicle-Tire Combinations');
 
-    % Shift the data
-    time_shifted = time - (ts - 5.0);
+for i = 1:9
+    tau = tau_vals(i);
+    yL = yL_vals(i);
+    yH = yH_vals(i);
 
-    % Build your model using ts = 5
     model = zeros(n,1);
-    for iindex = 1:n
-        t = time(iindex);
+    for j = 1:n
+        t = time(j);
         if t < target_ts
-            model(iindex) = yL;
+            model(j) = yL;
         else
-            model(iindex) = yL + (yH - yL) * (1 - exp(-(t - target_ts)/tau));
+            model(j) = yL + (yH - yL) * (1 - exp(-(t - target_ts)/tau));
         end
     end
 
-    % Plotting 
-    sgtitle('Performance Boundary Evaluation, Model Validity at Standardized Start Time');
-    subplot(3,1,kindex);
-    plot(time_shifted, speeds(:,kindex), 'b-', 'DisplayName','Benchmark Data'); hold on;
-    plot(time, model, 'r-', 'DisplayName','First Order Model', LineWidth = 1.5);
-    plot(time, left_model, 'k:', 'DisplayName','Left Bound', 'LineWidth', 2);
-    plot(time, right_model, 'k--', 'DisplayName','Right Bound', 'LineWidth', 2);
-    title(vehicleNames{kindex});
+    subplot(3,3,i);
+    plot(time, model, 'r-', 'LineWidth', 1.5, 'DisplayName', 'First Order Model'); hold on;
+    plot(time, left_model, 'k:', 'LineWidth', 2, 'DisplayName', 'Left Bound');
+    plot(time, right_model, 'k--', 'LineWidth', 2, 'DisplayName', 'Right Bound');
+    title(labels{i});
     xlabel('Time (s)');
     ylabel('Speed (m/s)');
     legend('Location','southeast');
