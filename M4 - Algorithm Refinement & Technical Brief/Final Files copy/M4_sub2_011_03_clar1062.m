@@ -27,6 +27,7 @@ function [outputData] = M4_sub2_011_03_clar1062(inputData)
 %                           Peter Teal, pteal@purdue.edu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%importing data
 data = inputData;
 n    = length(data);
 

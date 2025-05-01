@@ -6,7 +6,7 @@ function M4_benchmark_011_03
 % benchmark data
 %
 % Function Call
-% M3_benchmark_011_03
+% M4_benchmark_011_03
 %
 % Input Arguments
 % None

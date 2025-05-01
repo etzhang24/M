@@ -17,7 +17,7 @@ function [acc_t, t_const] = M4_sub3_011_03_soaresj(smooth_y, time)
 % 
 %
 % Function Call
-% function [acc_t, t_const] = M3_sub1_011_03_soaresj(smooth_y, time)
+% function [acc_t, t_const] = M4_sub1_011_03_soaresj(smooth_y, time)
 %
 % Input Arguments
 % smooth_y --> Smoothed y values (m/s)
@@ -26,7 +26,7 @@ function [acc_t, t_const] = M4_sub3_011_03_soaresj(smooth_y, time)
 % acc_t --> Acceleration starting time (s)
 % t_const --> Time constant
 % Assignment Information
-%   Assignment:     M3, Problem 1
+%   Assignment:     M4, Problem 1
 %   Team member:    John Soares, soaresj@purdue.edu 
 %   Team ID:        011-03
 %   Academic Integrity:
