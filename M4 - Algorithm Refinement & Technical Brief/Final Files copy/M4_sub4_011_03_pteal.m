@@ -50,7 +50,7 @@ length_data = length(clean_speed);
 %having the average for initial speed include 40 extra indexes after our detected 
 %acceleration start time since our dected acceleration start time was slightly before the benchmark acceleration start
 %time
-end_idx = min(start_idx + 40, length(clean_speed));
+end_idx = start_idx + 40;
 init_speed = mean(clean_speed(1: end_idx));
 
 %calculates the final speed by finding the average of the last 500 speed
