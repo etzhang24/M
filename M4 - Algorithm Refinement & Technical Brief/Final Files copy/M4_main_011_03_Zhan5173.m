@@ -2,14 +2,15 @@ function M4_main_011_03_Zhan5173
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ENGR 132 
 % Program Description % 
-% This program is for Part 4b of Milestone 3. It evaluates the accuracy of 
-% a first-order model created by our team’s algorithm using benchmark 
-% acceleration data for three vehicle types: a compact hatchback, 
-% a midsize sedan, and an SUV.
+% This program is for Part 4b and 4c of Milestone 4. It evaluates the accuracy of 
+% a first-order model created by our team’s algorithm using the
+% experimental data set with the acceleration data for three vehicle types:
+% a compact hatchback, a midsize sedan, and an SUV, this function 
+% determines the parameters for each and then plots all 45 graphs 
+% with the algorithm model.
 % 
-%
 % Function Call
-% function M3_main_011_03_Zhan5173
+% function M4_main_011_03_Zhan5173
 %
 % Input Arguments
 % none
@@ -18,7 +19,7 @@ function M4_main_011_03_Zhan5173
 % none
 %
 % Assignment Information
-%   Assignment:     M3, Problem 4b
+%   Assignment:     M4, Problem 4b, 4c
 %   Team member:    Ethan Zhang, Zhan5173@purdue.edu
 %   Team ID:        011-03
 %   Academic Integrity:
@@ -52,9 +53,9 @@ yL_vals = zeros(1,3);
 yH_vals = zeros(1,3);
 sse_vals = zeros(1,3);
 
-%% ____________________
 %% CALCULATIONS
 
+% looping through to get parameters
 for kindex = 1:3
     speed = speeds(:,kindex);
     clean_speed = M4_sub2_011_03_clar1062(speed);
@@ -66,7 +67,8 @@ for kindex = 1:3
     yL_vals(kindex) = yL;
     yH_vals(kindex) = yH;
 
-    model = zeros(n,1);
+    model = zeros(n,1); %proallocation
+
     for index = 1:n
         t = time(index);
         if t < ts
@@ -79,64 +81,77 @@ for kindex = 1:3
     sse_vals(kindex) = sum((speed - model).^2) / n;
 end
 
-%% ____________________
-%% PART 4B: PARAMETER EXTRACTION FOR 45 TESTS
+%% PARAMETER EXTRACTION FOR 45 TESTS
 
+%getting parameters for all 45 plots
 data = readtable('Sp25_cruiseAuto_experimental_data.csv');
-t = table2array(data(:, 1)); % ensure t is globally accessible
+t = table2array(data(:, 1)); % ensure t is global
 labels = {
     'CH Summer', 'CH All-Season', 'CH Winter', ...
     'MS Summer', 'MS All-Season', 'MS Winter', ...
     'SUV Summer', 'SUV All-Season', 'SUV Winter'};
 
+%preallocation
 avgResults_M3 = zeros(9, 4);
 avgResults_M4 = zeros(9, 4);
 
-for i = 1:9
-    idxStart = (i-1)*5 + 1;
+for idxx = 1:9
+    idxStart = (idxx-1)*5 + 1;
 
     m3_group = zeros(5, 4);
     m4_group = zeros(5, 4);
 
-    for j = 1:5
-        colIdx = idxStart + j - 1;
+    %loopoing through to get the parameters for each plot, time complexity
+    %of O(n^2)
+    for jidx = 1:5
+        colIdx = idxStart + jidx - 1;
         y = table2array(data(:, colIdx+1));
 
         cleaned_speed = M3_sub2_011_03_clar1062(y);
         [ts, tau] = M4_sub3_011_03_soaresj(cleaned_speed, t);
         [yL, yH] = M4_sub4_011_03_pteal(cleaned_speed, t, ts);
-        m3_group(j, :) = [ts, tau, yL, yH];
+        m3_group(jidx, :) = [ts, tau, yL, yH];
 
         cleaned_speed_M4 = M4_sub2_011_03_clar1062(y);
         [tsM4, tauM4] = M4_sub3_011_03_soaresj(cleaned_speed_M4, t);
         [yLM4, yHM4] = M4_sub4_011_03_pteal(cleaned_speed_M4, t, tsM4);
-        m4_group(j, :) = [tsM4, tauM4, yLM4, yHM4];
+        m4_group(jidx, :) = [tsM4, tauM4, yLM4, yHM4];
     end
 
-    avgResults_M3(i, :) = mean(m3_group, 1, 'omitnan');
-    avgResults_M4(i, :) = mean(m4_group, 1, 'omitnan');
+    avgResults_M3(idxx, :) = mean(m3_group, 1, 'omitnan');
+    avgResults_M4(idxx, :) = mean(m4_group, 1, 'omitnan');
 end
 
-fprintf('\nTable 4b.1 – M3 and M4 Algorithm Comparison of Experimental Data Parameters\n\n');
+%printing the header
+fprintf(['\nTable 4b.1 – M3 and M4 Algorithm Comparison of E' ...
+    'xperimental Data Parameters\n\n']);
 fprintf('%-25s %-8s %-8s %-10s %-10s %-8s %-8s %-10s %-10s\n', ...
-    'Vehicle-Tire', 'M3_ts', 'M3_tau', 'M3_yL', 'M3_yH', 'M4_ts', 'M4_tau', 'M4_yL', 'M4_yH');
+    'Vehicle-Tire', 'M3_ts', 'M3_tau', 'M3_yL', 'M3_yH', ...
+    'M4_ts', 'M4_tau', 'M4_yL', 'M4_yH');
 
+%printing results
 for idx = 1:9
     fprintf('%-25s %-8.2f %-8.2f %-10.2f %-10.2f %-8.2f %-8.2f %-10.2f %-10.2f\n', ...
-        labels{idx}, avgResults_M3(idx,1), avgResults_M3(idx,2), avgResults_M3(idx,3), avgResults_M3(idx,4), ...
-        avgResults_M4(idx,1), avgResults_M4(idx,2), avgResults_M4(idx,3), avgResults_M4(idx,4));
+        labels{idx}, avgResults_M3(idx,1), avgResults_M3(idx,2) ...
+        , avgResults_M3(idx,3), avgResults_M3(idx,4), ...
+        avgResults_M4(idx,1), avgResults_M4(idx,2), ...
+        avgResults_M4(idx,3), avgResults_M4(idx,4));
 end
 
 %% ____________________
-%% PLOTS – 45 TESTS WITH MODEL OVERLAY
+%% GRAPHING
 
+%plotting the results
 figure;
 sgtitle('Experimental Data vs. M4 Model – 45 Tests');
 
+%looping throough to plot 5 graphs per plot and 9 plots, each plot has a
+%model line and ecah of the 5 plots under it.
 for group = 1:9
     subplot(3,3,group);
     hold on;
-
+    
+    %average values
     tsM4 = avgResults_M4(group, 1);
     tauM4 = avgResults_M4(group, 2);
     yLM4 = avgResults_M4(group, 3);
@@ -149,7 +164,8 @@ for group = 1:9
     for trial = 1:5
         colIdx = (group-1)*5 + trial + 1;
         y = table2array(data(:, colIdx));
-        plot(t, y, ':', 'Color', colors(trial,:), 'DisplayName', sprintf('Trial %d', trial));
+        plot(t, y, ':', 'Color', colors(trial,:), 'DisplayName', ...
+            sprintf('Trial %d', trial));
     end
 
     % Plot model line once
