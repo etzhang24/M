@@ -3,10 +3,10 @@ function M4_performance_011_03
 % ENGR 132 
 % Program Description 
 % this program takes in the models and compares them with the bounds from
-% M0 to see how our model does
+%  to see how our model does
 %
 % Function Call
-% M3_performance_011_03
+% M4_performance_011_03
 %
 % Input Arguments
 % None
@@ -15,7 +15,7 @@ function M4_performance_011_03
 % None
 %
 % Assignment Information
-%   Assignment:     M3 , Problem 5
+%   Assignment:     M4 , Problem 5
 %   Team member:    Peter Teal, pteal@purdue.edu 
 %   Team ID:        011-03
 %   Academic Integrity:
@@ -73,10 +73,12 @@ end
 figure;
 sgtitle('Performance Boundary Evaluation for All Vehicle-Tire Combinations');
 
-for i = 1:9
-    tau = tau_vals(i);
-    yL = yL_vals(i);
-    yH = yH_vals(i);
+% plotting 9 graphs with the boundaries and the line using our parameters
+% we got from our function
+for idx = 1:9
+    tau = tau_vals(idx);
+    yL = yL_vals(idx);
+    yH = yH_vals(idx);
 
     model = zeros(n,1);
     for j = 1:n
@@ -88,11 +90,11 @@ for i = 1:9
         end
     end
 
-    subplot(3,3,i);
+    subplot(3,3,idx);
     plot(time, model, 'r-', 'LineWidth', 1.5, 'DisplayName', 'First Order Model'); hold on;
     plot(time, left_model, 'k:', 'LineWidth', 2, 'DisplayName', 'Left Bound');
     plot(time, right_model, 'k--', 'LineWidth', 2, 'DisplayName', 'Right Bound');
-    title(labels{i});
+    title(labels{idx});
     xlabel('Time (s)');
     ylabel('Speed (m/s)');
     legend('Location','southeast');
